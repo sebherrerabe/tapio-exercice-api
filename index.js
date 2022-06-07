@@ -64,6 +64,9 @@ app.post('/api/deletepost', (req, resp) => {
     Post.findByIdAndDelete(req.body.id).then(() => {
         resp.send("Post Deleted");
     })
+    .catch((err) => {
+        resp.send(err);
+    })
 })
 
 
