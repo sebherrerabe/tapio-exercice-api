@@ -50,11 +50,15 @@ app.post('/api/createpost', async (req, resp) => {
 })
 app.post('/api/updatepost', async (req, resp) => {
     const post = await Post.findById(req.body.id);
-    post.img = req.body.img;
-    post.title = req.body.title;
-    post.content = req.body.content;
-    await post.save();
-    resp.send(post);
+    if (post) {
+        post.img = req.body.img;
+        post.title = req.body.title;
+        post.content = req.body.content;
+        resp.send(post);
+        await post.save();
+    } else {
+        resp.send("Post not found");
+    }
 })
 app.post('/api/deletepost', (req, resp) => {
     Post.findByIdAndDelete(req.body.id).then(() => {
