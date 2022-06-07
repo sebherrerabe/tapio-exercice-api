@@ -76,7 +76,7 @@ app.post('/api/deletepost', (req, resp) => {
 const sendTODB = (data) => {
     data.forEach(async (el) => {
         const post = new Post({
-            img: "https://random.imagecdn.app/500/150",
+            img: "https://picsum.photos/200/300",
             title: el.title,
             content: el.body,
         });
