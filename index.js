@@ -96,4 +96,4 @@ app.post("/api/jsonplaceholder", (req, resp) => {
 
 })
 
-app.listen(5000);
+app.listen(process.env.PORT || 5000);
