@@ -39,7 +39,7 @@ app.get('/api/posts', (req, resp) => {
         });
 })
 
-app.post('/api/createpost', async (req, resp) => {
+app.post('/api/posts/', async (req, resp) => {
     const post = new Post({
         img: req.body.img,
         title: req.body.title,
@@ -48,27 +48,33 @@ app.post('/api/createpost', async (req, resp) => {
     await post.save();
     resp.send(post);
 })
-app.post('/api/updatepost', async (req, resp) => {
-    const post = await Post.findById(req.body.id);
+
+
+
+app.put('/api/posts/:id', async (req, resp) => {
+    const post = await Post.findById(req.params.id);
     if (post) {
         post.img = req.body.img;
         post.title = req.body.title;
         post.content = req.body.content;
-        resp.send(post);
         await post.save();
+        resp.send(post);
     } else {
         resp.send("Post not found");
     }
-})
-app.post('/api/deletepost', (req, resp) => {
-    Post.findByIdAndDelete(req.body.id).then(() => {
-        resp.send("Post Deleted");
-    })
-    .catch((err) => {
-        resp.send(err);
-    })
-})
+}
+)
 
+app.delete('/api/posts/:id', async (req, resp) => {
+    const post = await Post.findById(req.params.id);
+    if (post) {
+        await post.remove();
+        resp.send("Post deleted");
+    } else {
+        resp.send("Post not found");
+    }
+}
+)
 
 // HERE ILL CALL THE JSON PLACEHOLDER API AND GET THE DATA$
 
